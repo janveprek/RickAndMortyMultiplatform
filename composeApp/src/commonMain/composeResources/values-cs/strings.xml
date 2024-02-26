@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Rick a Morty</string>
+    <string name="bottom_bar_characters">Postavy</string>
+    <string name="bottom_bar_favourites">Oblíbené</string>
+
+    <!--  Errors  -->
+    <string name="error_title">Něco se pokazilo</string>
+    <string name="error_text">Zkontrolujte své připojení k internetu a zkuste to znovu.</string>
+    <string name="try_again">Zkusit znovu</string>
+
+    <!--  Empty  -->
+    <string name="empty_title">Tady nic není!</string>
+    <string name="empty_text">Přidejte nějaké postavy do oblíbených</string>
+
+    <!--  Sections  -->
+    <string name="name">Jméno</string>
+    <string name="status">Status</string>
+    <string name="species">Druhy</string>
+    <string name="type">Typ</string>
+    <string name="gender">Pohlaví</string>
+    <string name="origin">Původ</string>
+    <string name="location">Lokace</string>
+
+    <!--  Search  -->
+    <string name="search">Vyhledat</string>
+    <string name="search_hint">Hledat postavy</string>
+</resources>

@@ -1,0 +1,21 @@
+CREATE TABLE Character (
+    id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    status TEXT,
+    imageUrl TEXT NOT NULL
+);
+
+insertCharacter:
+INSERT INTO Character(id, name, status, imageUrl)
+VALUES(?, ?, ?, ?);
+
+removeAllCharacters:
+DELETE FROM Character;
+
+removeCharacterById:
+DELETE FROM Character
+WHERE id = ?;
+
+selectAllCharacters:
+SELECT Character.*
+FROM Character;
