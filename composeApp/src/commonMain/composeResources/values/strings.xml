@@ -3,6 +3,8 @@
     <string name="bottom_bar_characters">Characters</string>
     <string name="bottom_bar_favourites">Favourites</string>
 
+    <string name="submit">Submit</string>
+
     <!--  Errors  -->
     <string name="error_title">Something went wrong</string>
     <string name="error_text">Please check your internet connection and try again later.</string>
@@ -24,4 +26,10 @@
     <!--  Search  -->
     <string name="search">Search</string>
     <string name="search_hint">Search characters</string>
+
+    <!--  Filters  -->
+    <string name="status_dead">Dead</string>
+    <string name="status_alive">Alive</string>
+    <string name="status_unknown">Unknown</string>
+    <string name="status_all">All</string>
 </resources>

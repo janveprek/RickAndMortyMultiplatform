@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -76,44 +77,60 @@ fun TopBar(
 fun AppSearchBar(
     modifier: Modifier = Modifier,
     onQueryChange: (String) -> Unit = {},
+    query: String = "",
     onSearch: (String) -> Unit = {},
+    onFilterClick: () -> Unit = {},
     content: @Composable ColumnScope.() -> Unit = {},
 ) {
-    var query by remember { mutableStateOf("") }
+    var queryState by remember { mutableStateOf(query) }
     var active by remember { mutableStateOf(false) }
-
-    SearchBar(
-        modifier = modifier.fillMaxWidth().padding(horizontal = paddingSmall),
-        placeholder = { Text(text = stringResource(Res.string.search_hint)) },
-        active = active,
-        query = query,
-        onQueryChange = {
-            query = it
-            onQueryChange(it.trim())
-        },
-        onSearch = {
-            onSearch(it)
-            active = false
-        },
-        leadingIcon = {
-            Icon(imageVector = Icons.Default.Search, contentDescription = null)
-        },
-        trailingIcon = {
-            if (query.isNotEmpty()) {
-                Icon(
-                    modifier =
-                        Modifier.clickable {
-                            query = ""
-                            onSearch(query)
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = paddingSmall),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        SearchBar(
+            modifier = modifier.padding(bottom = paddingSmall).fillMaxWidth().weight(1f, false),
+            placeholder = { Text(text = stringResource(Res.string.search_hint)) },
+            active = active,
+            query = queryState,
+            onQueryChange = {
+                queryState = it
+                onQueryChange(it.trim())
+            },
+            onSearch = {
+                onSearch(it)
+                active = false
+            },
+            leadingIcon = {
+                if (active) {
+                    Icon(
+                        modifier = Modifier.clickable { active = false },
+                        imageVector = Icons.Default.ArrowBackIosNew, contentDescription = null
+                    )
+                } else {
+                    Icon(imageVector = Icons.Default.Search, contentDescription = null)
+                }
+            },
+            trailingIcon = {
+                if (queryState.isNotEmpty()) {
+                    Icon(
+                        modifier = Modifier.clickable {
+                            queryState = ""
+                            onSearch(queryState)
                         },
-                    imageVector = Icons.Default.Close,
-                    contentDescription = null,
-                )
-            }
-        },
-        content = content,
-        onActiveChange = {
-            active = it
-        },
-    )
+                        imageVector = Icons.Default.Close, contentDescription = null
+                    )
+                }
+            },
+            content = content,
+            onActiveChange = {
+                active = it
+            },
+        )
+        IconButton(
+            onClick = onFilterClick,
+        ) {
+            Icon(imageVector = Icons.Default.Tune, contentDescription = null)
+        }
+    }
 }

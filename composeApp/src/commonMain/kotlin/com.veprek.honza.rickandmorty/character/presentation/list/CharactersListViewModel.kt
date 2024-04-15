@@ -7,7 +7,10 @@ import com.veprek.honza.rickandmorty.character.domain.RemoveCharacterFromFavouri
 import com.veprek.honza.rickandmorty.character.model.CharacterModel
 import com.veprek.honza.rickandmorty.character.model.ResultWrapper
 import com.veprek.honza.rickandmorty.character.model.State
+import com.veprek.honza.rickandmorty.character.model.StatusFilter
 import com.veprek.honza.rickandmorty.character.presentation.list.state.CharacterListState
+import com.veprek.honza.rickandmorty.character.presentation.list.state.ScreenState
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -28,8 +31,18 @@ class CharactersListViewModel(
         updateCharacters()
     }
 
+    override fun onCleared() {
+        Napier.d("onCleared", tag = TAG)
+        super.onCleared()
+    }
+
+    override fun close() {
+        Napier.d("close", tag = TAG)
+        super.close()
+    }
+
     internal fun updateCharacters() {
-        _charactersState.update { it.copy(state = State.Loading) }
+        _charactersState.update { it.copy(state = ScreenState.Loading) }
         viewModelScope.launch {
             val result = getAllCharacters()
             when (result) {
@@ -37,7 +50,7 @@ class CharactersListViewModel(
                     val characters = result.value
                     _charactersState.update {
                         it.copy(
-                            state = State.Success,
+                            state = ScreenState.Success,
                             characters = characters,
                         )
                     }
@@ -45,7 +58,7 @@ class CharactersListViewModel(
                 is ResultWrapper.Error -> {
                     _charactersState.update {
                         it.copy(
-                            state = State.Error,
+                            state = ScreenState.Error,
                         )
                     }
                 }
@@ -76,27 +89,64 @@ class CharactersListViewModel(
         }
     }
 
-    fun search(name: String) {
+    fun search(query: String) {
+        _charactersState.update { it.copy(state = ScreenState.Loading) }
         viewModelScope.launch {
-            val result = getCharactersByName(name)
+            Napier.d("searching query: $query, filter: ${_charactersState.value.appliedFilter}")
+            val result = getCharactersByName(query, _charactersState.value.appliedFilter)
             when (result) {
                 is ResultWrapper.Success -> {
                     val characters = result.value
-                    _charactersState.update {
-                        it.copy(
-                            state = State.Success,
-                            characters = characters,
-                        )
+                    if (characters.isNotEmpty()) {
+                        _charactersState.update {
+                            it.copy(
+                                state = ScreenState.Success,
+                                query = query,
+                                characters = characters,
+                            )
+                        }
+                    } else {
+                        _charactersState.update {
+                            it.copy(
+                                state = ScreenState.Empty,
+                                query = query,
+                                characters = characters,
+                            )
+                        }
                     }
                 }
                 is ResultWrapper.Error -> {
                     _charactersState.update {
                         it.copy(
-                            state = State.Error,
+                            state = ScreenState.Error,
                         )
                     }
                 }
             }
         }
+    }
+
+
+    fun applyFilters(filter: StatusFilter) {
+        _charactersState.update {
+            it.copy(appliedFilter = filter)
+        }
+        search(_charactersState.value.query)
+    }
+
+    fun openBottomSheet() {
+        _charactersState.update {
+            it.copy(openBottomSheet = true)
+        }
+    }
+
+    fun closeBottomSheet() {
+        _charactersState.update {
+            it.copy(openBottomSheet = false)
+        }
+    }
+
+    companion object {
+        private const val TAG = "ListViewModel"
     }
 }

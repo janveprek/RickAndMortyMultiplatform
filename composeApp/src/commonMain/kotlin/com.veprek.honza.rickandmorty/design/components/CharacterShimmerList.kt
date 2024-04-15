@@ -53,11 +53,10 @@ fun CharacterShimmerList(modifier: Modifier = Modifier) {
             count = ITEM_COUNT,
         ) {
             CharacterShimmerItem(
-                modifier =
-                    Modifier.padding(
-                        horizontal = paddingSmall,
-                        vertical = paddingSmall,
-                    ),
+                modifier = Modifier.padding(
+                    horizontal = paddingSmall,
+                    vertical = paddingSmall
+                )
             )
         }
     }
@@ -67,26 +66,26 @@ fun CharacterShimmerList(modifier: Modifier = Modifier) {
 fun CharacterShimmerItem(modifier: Modifier = Modifier) {
     Card(
         modifier =
-            modifier
-                .height(cardHeight)
-                .clip(RoundedCornerShape(cornerRadiusMedium)),
+        modifier
+            .height(cardHeight)
+            .clip(RoundedCornerShape(cornerRadiusMedium)),
     ) {
         Row(
             modifier =
-                Modifier
-                    .fillMaxWidth(),
+            Modifier
+                .fillMaxWidth(),
         ) {
             Box(
                 modifier =
-                    Modifier
-                        .clip(RoundedCornerShape(cornerRadiusMedium))
-                        .size(iconSizeLarge)
-                        .shimmerEffect(),
+                Modifier
+                    .clip(RoundedCornerShape(cornerRadiusMedium))
+                    .size(iconSizeLarge)
+                    .shimmerEffect(),
             )
             Row(
                 modifier =
-                    Modifier
-                        .fillMaxWidth().padding(horizontal = paddingSmall),
+                Modifier
+                    .fillMaxWidth().padding(horizontal = paddingSmall),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column(modifier = Modifier.padding(vertical = paddingSmall).weight(1f)) {
@@ -116,23 +115,23 @@ fun Modifier.shimmerEffect(): Modifier =
             initialValue = -2 * size.width.toFloat(),
             targetValue = 2 * size.width.toFloat(),
             animationSpec =
-                infiniteRepeatable(
-                    animation = tween(1000),
-                ),
+            infiniteRepeatable(
+                animation = tween(1000),
+            ),
         )
 
         background(
             brush =
-                Brush.linearGradient(
-                    colors =
-                        listOf(
-                            Gray,
-                            GrayDark,
-                            Gray,
-                        ),
-                    start = Offset(startOffsetX, 0f),
-                    end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat()),
+            Brush.linearGradient(
+                colors =
+                listOf(
+                    Gray,
+                    GrayDark,
+                    Gray,
                 ),
+                start = Offset(startOffsetX, 0f),
+                end = Offset(startOffsetX + size.width.toFloat(), size.height.toFloat()),
+            ),
         )
             .onGloballyPositioned {
                 size = it.size

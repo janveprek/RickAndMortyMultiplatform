@@ -5,6 +5,7 @@ import com.veprek.honza.rickandmorty.character.domain.CharacterRepository
 import com.veprek.honza.rickandmorty.character.model.CharacterDetail
 import com.veprek.honza.rickandmorty.character.model.CharacterModel
 import com.veprek.honza.rickandmorty.character.model.ResultWrapper
+import com.veprek.honza.rickandmorty.character.model.StatusFilter
 
 class CharacterRepositoryImpl(
     private val charactersApi: CharactersApi,
@@ -20,9 +21,9 @@ class CharacterRepositoryImpl(
         }
     }
 
-    override suspend fun getCharactersByName(name: String): ResultWrapper<List<CharacterModel>> {
+    override suspend fun getCharactersByName(name: String, filter: StatusFilter): ResultWrapper<List<CharacterModel>> {
         return try {
-            ResultWrapper.Success(charactersApi.getCharactersByName(name).result.map { it.toModel() })
+            ResultWrapper.Success(charactersApi.getCharactersByName(name, filter).result.map { it.toModel() })
         } catch (ex: Exception) {
             ResultWrapper.Error(ex)
         }

@@ -3,6 +3,7 @@ package com.veprek.honza.rickandmorty.design.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
@@ -23,7 +24,9 @@ import rickandmorty.composeapp.generated.resources.Res
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun EmptyScreen(modifier: Modifier = Modifier) {
+fun EmptyScreen(
+    modifier: Modifier = Modifier,
+) {
     Column(
         modifier
             .fillMaxSize(),
@@ -42,8 +45,8 @@ fun EmptyScreen(modifier: Modifier = Modifier) {
 
         Icon(
             modifier =
-                Modifier
-                    .size(iconSizeLarge),
+            Modifier
+                .height(iconSizeLarge),
             tint = MaterialTheme.colorScheme.primary,
             painter = painterResource(Res.drawable.ic_error),
             contentDescription = stringResource(Res.string.empty_text),

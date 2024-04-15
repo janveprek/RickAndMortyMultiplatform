@@ -50,8 +50,8 @@ fun ErrorScreen(
 
         Icon(
             modifier =
-                Modifier
-                    .size(iconSizeLarge),
+            Modifier
+                .size(iconSizeLarge),
             tint = MaterialTheme.colorScheme.primary,
             painter = painterResource(Res.drawable.ic_error),
             contentDescription = stringResource(Res.string.error_text),

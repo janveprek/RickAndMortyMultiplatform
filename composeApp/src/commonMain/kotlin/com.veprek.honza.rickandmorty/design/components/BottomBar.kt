@@ -35,8 +35,6 @@ fun BottomBar(
 ) {
     val currentScreen by navigator.currentEntry.map { it?.route?.route.routeToScreen() }
         .collectAsState(initial = null)
-    val previousScreen by navigator.previousEntry.map { it?.route?.route.routeToScreen() }
-        .collectAsState(initial = null)
     if (currentScreen?.isRoot == true) {
         BottomAppBar(modifier) {
             BottomBarItem(

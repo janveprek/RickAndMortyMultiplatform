@@ -3,6 +3,8 @@
     <string name="bottom_bar_characters">Postavy</string>
     <string name="bottom_bar_favourites">Oblíbené</string>
 
+    <string name="submit">Odeslat</string>
+
     <!--  Errors  -->
     <string name="error_title">Něco se pokazilo</string>
     <string name="error_text">Zkontrolujte své připojení k internetu a zkuste to znovu.</string>
@@ -24,4 +26,10 @@
     <!--  Search  -->
     <string name="search">Vyhledat</string>
     <string name="search_hint">Hledat postavy</string>
+
+    <!--  Filters  -->
+    <string name="status_dead">Mrtvý</string>
+    <string name="status_alive">Živý</string>
+    <string name="status_unknown">Neznámý</string>
+    <string name="status_all">Všechny</string>
 </resources>

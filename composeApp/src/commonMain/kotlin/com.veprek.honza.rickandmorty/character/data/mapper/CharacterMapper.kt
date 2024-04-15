@@ -7,7 +7,7 @@ import com.veprek.honza.rickandmorty.character.model.CharacterModel
 
 fun CharacterDto.toModel(): CharacterModel {
     return CharacterModel(
-        id = id,
+        id = id.toInt(),
         name = name,
         status = status,
         iconUrl = image,
