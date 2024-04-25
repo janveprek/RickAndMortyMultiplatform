@@ -76,6 +76,8 @@ val characterModule =
             CharacterDetailViewModel(
                 id = id,
                 getCharacterById = get(),
+                addCharacterToFavourites = get(),
+                removeCharacterFromFavourites = get(),
             )
         }
 

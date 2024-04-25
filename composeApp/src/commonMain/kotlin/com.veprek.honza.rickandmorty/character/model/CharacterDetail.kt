@@ -10,4 +10,5 @@ data class CharacterDetail(
     val origin: String,
     val location: String,
     val iconUrl: String,
+    val isFavourite: Boolean = false,
 )

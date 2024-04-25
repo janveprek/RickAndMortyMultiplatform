@@ -6,6 +6,7 @@ import com.veprek.honza.rickandmorty.character.model.CharacterDetail
 import com.veprek.honza.rickandmorty.character.model.CharacterModel
 import com.veprek.honza.rickandmorty.character.model.ResultWrapper
 import com.veprek.honza.rickandmorty.character.model.StatusFilter
+import io.github.aakira.napier.Napier
 
 class CharacterRepositoryImpl(
     private val charactersApi: CharactersApi,
@@ -34,7 +35,7 @@ class CharacterRepositoryImpl(
     }
 
     override suspend fun addCharacterToFavourites(character: CharacterModel) {
-        favouriteCharacters += character
+        favouriteCharacters += character.copy(isFavourite = true)
     }
 
     override suspend fun removeCharacterFromFavourites(character: CharacterModel) {
@@ -43,7 +44,12 @@ class CharacterRepositoryImpl(
 
     override suspend fun getCharacterById(id: Long): ResultWrapper<CharacterDetail> {
         return try {
-            ResultWrapper.Success(charactersApi.getCharacterById(id).toModel())
+            val character = charactersApi.getCharacterById(id).toModel()
+            if (favouriteCharacters.find { it.id == id.toInt() } != null) {
+                ResultWrapper.Success(character.copy(isFavourite = true))
+            } else {
+                ResultWrapper.Success(character)
+            }
         } catch (ex: Exception) {
             ResultWrapper.Error(ex)
         }
