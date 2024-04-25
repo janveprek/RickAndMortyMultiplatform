@@ -19,3 +19,10 @@ WHERE id = ?;
 selectAllCharacters:
 SELECT Character.*
 FROM Character;
+
+isCharacterFavourite:
+SELECT EXISTS (
+        SELECT 1
+        FROM Character
+        WHERE id = ?
+    );
