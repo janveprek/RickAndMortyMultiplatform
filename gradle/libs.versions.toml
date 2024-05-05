@@ -18,7 +18,7 @@ compose-compiler = "1.5.6"
 compose-plugin = "1.6.0-beta02"
 
 imageLoader = "1.7.2-SNAPSHOT"
-koinCore = "3.6.0-wasm-alpha2"
+koinCore = "3.6.0-Beta2"
 koinCompose = "1.1.2"
 kotlin = "1.9.22"
 kotlinxSerializationJson = "1.6.2"
@@ -27,7 +27,7 @@ kotlinxSerializationJson = "1.6.2"
 ktor-wasm = "3.0.0-wasm2"
 
 napier = "2.7.1"
-precompose = "1.6.0-beta02"
+precompose = "1.6.0"
 # Testing
 junit = "4.13.2"
 #annotationJvm = "1.7.1"

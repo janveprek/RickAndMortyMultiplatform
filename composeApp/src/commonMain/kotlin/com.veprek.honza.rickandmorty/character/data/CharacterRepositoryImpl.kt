@@ -6,6 +6,7 @@ import com.veprek.honza.rickandmorty.character.model.CharacterDetail
 import com.veprek.honza.rickandmorty.character.model.CharacterModel
 import com.veprek.honza.rickandmorty.character.model.ResultWrapper
 import com.veprek.honza.rickandmorty.character.model.StatusFilter
+import com.veprek.honza.rickandmorty.character.presentation.list.CharactersListViewModel
 import io.github.aakira.napier.Napier
 
 class CharacterRepositoryImpl(
@@ -35,6 +36,7 @@ class CharacterRepositoryImpl(
     }
 
     override suspend fun addCharacterToFavourites(character: CharacterModel) {
+        Napier.d("add character, $favouriteCharacters")
         favouriteCharacters += character.copy(isFavourite = true)
     }
 

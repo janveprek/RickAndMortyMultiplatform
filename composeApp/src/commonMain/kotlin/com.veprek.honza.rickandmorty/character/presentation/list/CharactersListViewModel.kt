@@ -32,12 +32,10 @@ class CharactersListViewModel(
     }
 
     override fun onCleared() {
-        Napier.d("onCleared", tag = TAG)
         super.onCleared()
     }
 
     override fun close() {
-        Napier.d("close", tag = TAG)
         super.close()
     }
 
