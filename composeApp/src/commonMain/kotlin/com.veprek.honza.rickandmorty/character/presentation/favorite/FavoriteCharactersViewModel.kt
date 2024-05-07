@@ -71,12 +71,23 @@ class FavoriteCharactersViewModel(
     }
 
     fun search(name: String) {
-        val characters = _charactersState.value.characters.filter { it.name.contains(name.trim()) }
+        val characters = _charactersState.value.characters.filter { it.name.contains(name.trim(), ignoreCase = true) }
+        updateState(characters)
+    }
+
+    private fun updateState(characters: List<CharacterModel>) {
         _charactersState.update {
-            it.copy(
-                state = ScreenState.Success,
-                characters = characters,
-            )
+            if (characters.isEmpty()) {
+                it.copy(
+                    state = ScreenState.Empty,
+                    characters = characters,
+                )
+            } else {
+                it.copy(
+                    state = ScreenState.Success,
+                    characters = characters,
+                )
+            }
         }
     }
 }

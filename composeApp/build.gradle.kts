@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.lint.AndroidLintAnalysisTask
+import com.android.build.gradle.internal.lint.LintModelWriterTask
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
@@ -5,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.kotlinSerialization)
+    alias(libs.plugins.kover)
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions.jvmTarget = "11" }
@@ -42,6 +45,17 @@ kotlin {
 
     sourceSets {
 
+        val androidUnitTest by getting {
+            dependencies {
+                implementation(libs.mockk.android)
+                implementation(libs.mockk.agent)
+                implementation(libs.coroutines.test)
+                implementation(libs.junit)
+                implementation(libs.kotest.assertions.core)
+                implementation(libs.turbine)
+            }
+        }
+
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
@@ -75,6 +89,39 @@ kotlin {
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
+        }
+    }
+}
+
+tasks.withType<AndroidLintAnalysisTask>{
+    dependsOn("copyFontsToAndroidAssets")
+}
+
+tasks.withType<LintModelWriterTask>{
+    dependsOn("copyFontsToAndroidAssets")
+}
+
+koverReport {
+    filters {
+        excludes {
+            classes("com.veprek.honza.rickandmorty.MainActivity*")
+            classes("com.veprek.honza.rickandmorty.ComposableSingletons*")
+            classes("com.veprek.honza.rickandmorty.app.*")
+            classes("com.veprek.honza.rickandmorty.*.di.*")
+            classes("com.veprek.honza.rickandmorty.data.*")
+            classes("com.veprek.honza.rickandmorty.design.*")
+            classes("com.veprek.honza.rickandmorty.navigation.system*")
+            classes("comveprekhonzarickandmorty.character.data.*")
+            classes("rickandmortymobile.composeapp.generated.resources.*")
+            annotatedBy("androidx.compose.runtime.Composable")
+        }
+    }
+    verify {
+        rule {
+            isEnabled = true
+            bound {
+                minValue = 75
+            }
         }
     }
 }
