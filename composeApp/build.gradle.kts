@@ -93,6 +93,7 @@ kotlin {
     }
 }
 
+// Because of a bug in Compose Multiplatform version, https://github.com/JetBrains/compose-multiplatform/issues/4085
 tasks.withType<AndroidLintAnalysisTask>{
     dependsOn("copyFontsToAndroidAssets")
 }
@@ -103,6 +104,7 @@ tasks.withType<LintModelWriterTask>{
 
 koverReport {
     filters {
+        // used for exclusion of classes that should not be tested (UI, generated files, ...)
         excludes {
             classes("com.veprek.honza.rickandmorty.MainActivity*")
             classes("com.veprek.honza.rickandmorty.ComposableSingletons*")

@@ -8,6 +8,7 @@ import com.veprek.honza.rickandmorty.character.model.CharacterModel
 import com.veprek.honza.rickandmorty.character.model.ResultWrapper
 import com.veprek.honza.rickandmorty.character.model.State
 import com.veprek.honza.rickandmorty.character.model.StatusFilter
+import com.veprek.honza.rickandmorty.character.presentation.favorite.FavoriteCharactersViewModel
 import com.veprek.honza.rickandmorty.character.presentation.list.state.CharacterListState
 import com.veprek.honza.rickandmorty.character.presentation.list.state.ScreenState
 import io.github.aakira.napier.Napier
@@ -32,11 +33,8 @@ class CharactersListViewModel(
     }
 
     override fun onCleared() {
+        Napier.d( "ViewModel killed", tag = TAG)
         super.onCleared()
-    }
-
-    override fun close() {
-        super.close()
     }
 
     internal fun updateCharacters() {

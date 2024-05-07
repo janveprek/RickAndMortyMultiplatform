@@ -22,10 +22,5 @@ object KoinHelper : KoinComponent {
             install(ContentNegotiation) {
                 json(Json { ignoreUnknownKeys = true })
             }
-//        HttpResponseValidator {
-//            handleResponseExceptionWithRequest { cause, _ ->
-//                throw cause
-//            }
-//        }
         }
 }
