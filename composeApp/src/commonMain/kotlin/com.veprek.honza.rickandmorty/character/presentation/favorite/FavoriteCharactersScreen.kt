@@ -23,9 +23,10 @@ import com.veprek.honza.rickandmorty.design.theme.paddingSmall
 import moe.tlaster.precompose.koin.koinViewModel
 
 @Composable
-fun FavoriteCharactersScreen(navigateToDetail: (Int) -> Unit) {
-    val viewModel: FavoriteCharactersViewModel = koinViewModel(vmClass = FavoriteCharactersViewModel::class)
-
+fun FavoriteCharactersScreen(
+    navigateToDetail: (Int) -> Unit,
+    viewModel: FavoriteCharactersViewModel = koinViewModel(vmClass = FavoriteCharactersViewModel::class)
+) {
     val uiState by viewModel.charactersState.collectAsState()
     FavoriteCharactersScreenContent(
         state = uiState,
@@ -75,7 +76,10 @@ fun CharacterList(
                     ) {
                         items(state.characters) { character ->
                             CharacterCard(
-                                modifier = Modifier.padding(horizontal = paddingSmall, vertical = paddingSmall),
+                                modifier = Modifier.padding(
+                                    horizontal = paddingSmall,
+                                    vertical = paddingSmall
+                                ),
                                 character = character,
                                 onCharacterClick = onCharacterClick,
                                 onCharacterLongClick = onCharacterLongClick,

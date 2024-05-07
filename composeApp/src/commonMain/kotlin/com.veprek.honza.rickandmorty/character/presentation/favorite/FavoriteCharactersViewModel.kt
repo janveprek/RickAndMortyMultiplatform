@@ -6,6 +6,7 @@ import com.veprek.honza.rickandmorty.character.domain.RemoveCharacterFromFavouri
 import com.veprek.honza.rickandmorty.character.model.CharacterModel
 import com.veprek.honza.rickandmorty.character.presentation.favorite.state.FavoriteCharactersState
 import com.veprek.honza.rickandmorty.character.presentation.favorite.state.ScreenState
+import io.github.aakira.napier.Napier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -13,6 +14,8 @@ import kotlinx.coroutines.launch
 import moe.tlaster.precompose.viewmodel.ViewModel
 import moe.tlaster.precompose.viewmodel.viewModelScope
 
+// TODO: When navigating to Favorite Characters, ViewModels somehow die
+// could be resolved by an update of library or by using https://www.jetbrains.com/help/kotlin-multiplatform-dev/whats-new-compose-eap.html#lifecycle-library
 class FavoriteCharactersViewModel(
     private val getFavouriteCharacters: GetFavouriteCharactersUseCase,
     private val addCharacterToFavourites: AddCharacterToFavouritesUseCase,
@@ -23,6 +26,11 @@ class FavoriteCharactersViewModel(
 
     init {
         getCharacters()
+    }
+
+    override fun onCleared() {
+        Napier.d( "ViewModel killed", tag = TAG)
+        super.onCleared()
     }
 
     internal fun getCharacters() {
@@ -89,5 +97,9 @@ class FavoriteCharactersViewModel(
                 )
             }
         }
+    }
+
+    companion object {
+        private const val TAG = "FavoriteCharactersViewModel"
     }
 }

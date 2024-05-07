@@ -13,7 +13,6 @@ fun MainNavHost(navigator: Navigator) {
     val navigateToDetail = { id: Int ->
         navigator.navigate(Screen.Detail.createRoute(id))
     }
-    // , NavOptions(popUpTo = PopUpTo("")
     NavHost(
         navigator = navigator,
         initialRoute = Screen.List.route,
